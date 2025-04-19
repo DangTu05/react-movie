@@ -4,6 +4,7 @@ import ImageComponent from "./Image";
 
 const MovieCard = (props) => {
   const { media, mediaType } = props;
+  console.log(media);
 
   return (
     <Link to={`/movie/${media.id}`}>

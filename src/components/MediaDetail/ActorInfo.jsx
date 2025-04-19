@@ -1,7 +1,6 @@
 import React from "react";
 
 const ActorInfo = ({ actor }) => {
-
   return (
     <div className="rounded-lg border border-slate-300 bg-black text-white shadow-sm">
       <img

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MovieCard from "../MovieCard";
 
+
 const MediaList = (props) => {
   const { title, tabs } = props;
   const [mediaList, setMediaList] = useState([]);
@@ -28,6 +29,7 @@ const MediaList = (props) => {
         },
       }).then(async (res) => {
         const data = await res.json();
+        console.log("Data:::", data);
         const trendingMedia = data.results.slice(0, 12);
         setMediaList(trendingMedia);
       });
