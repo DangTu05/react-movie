@@ -5,10 +5,14 @@ const defaultHeaders = {
   accept: "application/json",
   Authorization: `Bearer ${token}`,
 };
-const useFetch = ({ url, method = "GET", headers = {} }) => {
+const useFetch = (
+  { url, method = "GET", headers = {} },
+  { enable } = { enable: true },
+) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    if (!enable) return;
     setIsLoading(true);
 
     const baseUrl = import.meta.env.VITE_API_HOST;
@@ -27,9 +31,9 @@ const useFetch = ({ url, method = "GET", headers = {} }) => {
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, method, JSON.stringify(headers)]);
+  }, [url, method, JSON.stringify(headers), enable]);
 
   return { isLoading, data };
 };
 
-export default useFetch;
+export { useFetch as default, defaultHeaders };

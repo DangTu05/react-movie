@@ -1,11 +1,15 @@
+import Header from "@components/Header";
+import LoadingAnimation from "@components/LoadingAnimation";
+import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import Header from "../components/Header";
 
 const RootLayout = () => {
   return (
     <div>
       <Header />
-      <Outlet />
+      <Suspense fallback={<LoadingAnimation />}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };

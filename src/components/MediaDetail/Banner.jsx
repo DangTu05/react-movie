@@ -1,26 +1,17 @@
+import { useModal } from "@context/ModalContext";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { groupBy } from "lodash";
-import React from "react";
 import CicalorProgessBar from "../CicalorProgessBar";
 
 const Banner = (props) => {
-  const { mediaInfo } = props;
+  const { setIsShow, setContent } = useModal();
 
-  const certification =
-    (
-      (mediaInfo.release_dates?.results || []).find(
-        (result) => result.iso_3166_1 === "US",
-      )?.release_dates || []
-    ).find((release_date) => release_date.certification)?.certification || "";
-
-  const crews = (mediaInfo.credits?.crew || [])
-    .filter((crew) => ["Director", "Screenplay", "Writer"].includes(crew.job))
-    .map((crew) => ({ id: crew.id, job: crew.job, name: crew.name }));
+  const { mediaInfo, certification, crews, trailerKey } = props;
 
   const groupCrews = groupBy(crews, "job");
   return (
-    <div className="relative overflow-hidden text-white shadow-md-bg-slate-800">
+    <div className="shadow-md-bg-slate-800 relative overflow-hidden text-white">
       {/* Hình nền mờ với lớp phủ tối */}
       <div className="absolute inset-0 bg-black/50">
         <img
@@ -42,14 +33,20 @@ const Banner = (props) => {
         {/* Nội dung */}
         <div className="flex-[2]">
           {/* Tiêu đề */}
-          <h1 className="text-4xl font-bold">{mediaInfo.title}</h1>
+          <h1 className="text-4xl font-bold">
+            {mediaInfo.title || mediaInfo.name}
+          </h1>
 
           {/* Thông tin phụ */}
           <div className="my-4 flex items-center gap-4">
             <span className="border border-gray-400 px-2 py-1 text-sm text-gray-400">
               {certification}
             </span>
-            <p className="text-base">{mediaInfo.release_date}</p>
+            <p className="text-base">
+              {mediaInfo.release_date
+                ? mediaInfo.release_date
+                : mediaInfo.first_air_date}
+            </p>
             <p className="text-base">
               {(mediaInfo.genres || []).map((genre) => genre.name).join(", ")}
             </p>
@@ -65,7 +62,19 @@ const Banner = (props) => {
               />
               <span className="mt-1 text-sm">Rating</span>
             </div>
-            <button className="flex items-center gap-2 text-white hover:text-gray-300">
+            <button
+              className="flex items-center gap-2 text-white hover:text-gray-300"
+              onClick={() => {
+                setIsShow(true);
+                setContent(
+                  <iframe
+                    title="trailer"
+                    src={`https://www.youtube.com/embed/${trailerKey}`}
+                    className="aspect-video w-[50vw]"
+                  />,
+                );
+              }}
+            >
               <FontAwesomeIcon icon={faPlay} />
               <span>Trailer</span>
             </button>

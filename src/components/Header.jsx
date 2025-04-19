@@ -22,7 +22,7 @@ const Header = () => {
         </button>
       </div>
       <div>
-        <FontAwesomeIcon icon={faMagnifyingGlass} className="cursor-pointer" />
+        <Link to ="/search"><FontAwesomeIcon icon={faMagnifyingGlass} className="cursor-pointer" /></Link>
       </div>
     </header>
   );

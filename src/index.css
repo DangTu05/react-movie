@@ -33,3 +33,37 @@
 body {
   font-family: "Netflix Sans", sans-serif;
 }
+
+@layer components {
+  .container {
+    @apply mx-auto flex max-w-screen-xl justify-between gap-5 px-2 py-10 sm:gap-6;
+  }
+}
+
+@keyframes gridMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 30px 30px;
+  }
+}
+
+@keyframes orbPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
